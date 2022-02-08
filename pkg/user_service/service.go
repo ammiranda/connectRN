@@ -5,7 +5,7 @@ const (
 )
 
 type UserService interface {
-
+	ParseUsers([]request.User) ([]response.User, error)
 }
 
 type service struct{}
@@ -15,5 +15,5 @@ func NewService() Service {
 }
 
 func (s *service) ParseUsers([]request.User) ([]response.User, error) {
-	
+
 }

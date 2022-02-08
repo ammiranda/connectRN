@@ -6,3 +6,5 @@ type User struct {
 	DOB       string `json:"DOB"`
 	CreatedOn int    `json:"created_on"`
 }
+
+type UserRequestBody []User
