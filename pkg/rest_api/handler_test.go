@@ -63,7 +63,7 @@ func TestImageRoute_Success(t *testing.T) {
 
 	defer outputFile.Close()
 
-	jpeg.Encode(outputFile, img, &jpeg.Options{})
+	jpeg.Encode(outputFile, img, nil)
 
 	var requestBody bytes.Buffer
 	multiPartWriter := multipart.NewWriter(&requestBody)
@@ -80,6 +80,9 @@ func TestImageRoute_Success(t *testing.T) {
 	require.NoError(t, err)
 	req.Header.Set("Content-Type", multiPartWriter.FormDataContentType())
 	r.ServeHTTP(w, req)
+
+	err = os.Remove("test.jpg")
+	require.NoError(t, err)
 
 	require.Equal(t, 200, w.Code)
 }

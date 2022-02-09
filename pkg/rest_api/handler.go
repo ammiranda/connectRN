@@ -1,11 +1,11 @@
 package rest_api
 
 import (
-	"github.com/ammiranda/connectRN/pkg/image_service"
+	"io/ioutil"
 	"github.com/ammiranda/connectRN/pkg/rest_api/models/request"
 	"github.com/ammiranda/connectRN/pkg/user_service"
+	"github.com/ammiranda/connectRN/pkg/image_service"
 	"github.com/gin-gonic/gin"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -50,6 +50,13 @@ func postImageHandler(i image_service.ImageService) func(c *gin.Context) {
 		fileBytes, err := ioutil.ReadAll(f)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		fileType := http.DetectContentType(fileBytes)
+
+		if fileType != "image/jpeg" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "not in jpg format"})
 			return
 		}
 
