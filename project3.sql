@@ -1,9 +1,9 @@
 CREATE TABLE Users (
-    ID int NOT NULL,
-    FirstName varchar(255),
-    LastName varchar(255),
-    City varchar(255),
-    ZipCode int,
+    ID INT NOT NULL,
+    FirstName VARCHAR(255),
+    LastName VARCHAR(255),
+    City VARCHAR(255),
+    ZipCode INT,
     PRIMARY KEY (ID),
     CONSTRAINT FK_UserPassword FOREIGN KEY (UserID)
     REFERENCES UserPasswordHistory(UserID)
@@ -11,8 +11,14 @@ CREATE TABLE Users (
 )
 
 CREATE TABLE UserPasswordHistory (
-    UserID int NOT NULL,
-    Pwd password,
-    ChangeDate date,
-    CurrentlyActiv boolean
+    UserID INT NOT NULL,
+    Pwd VARCHAR(255),
+    ChangeDate DATETIME
+    CONSTRAINT CD_changeDate DEFAULT (getdate)),
+    CurrentlyActive BOOLEAN DEFAULT TRUE,
 )
+
+SELECT Pwd FROM UserPasswordHistory WHERE CurrentlyActive = TRUE;
+
+INSERT INTO UserPasswordHistory (Pwd) VALUES (HASHBYTES('MD5', 'Password123'));
+
