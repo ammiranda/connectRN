@@ -14,6 +14,9 @@ $(GOMETALINTER):
 dev-up:
 	docker-compose -f ./docker-compose.yml up -d
 
+dev-recreate:
+	docker-compose -f ./docker-compose.yml up --force-recreate --build -d
+
 dev-down:
 	docker-compose -f ./docker-compose.yml down
 
