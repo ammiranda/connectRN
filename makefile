@@ -8,8 +8,7 @@ BIN_DIR := $(GOPATH)/bin
 GOMETALINTER := $(BIN_DIR)/gometalinter
 
 $(GOMETALINTER):
-	go get -u github.com/alecthomas/gometalinter
-	gometalinter --install &> /dev/null
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.44.0
 
 dev-up:
 	docker-compose -f ./docker-compose.yml up -d
@@ -25,9 +24,9 @@ dev-clean: dev-down
 
 .PHONY: lint
 lint: $(GOMETALINTER)
-	gometalinter ./... --vendor
+	golangci-lint run
 
-BINARY := timeserver
+BINARY := connectRN
 VERSION ?= vlatest
 PLATFORMS := windows linux darwin
 os = $(word 1, $@)
