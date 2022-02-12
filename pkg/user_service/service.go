@@ -2,9 +2,10 @@ package user_service
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/ammiranda/connectRN/pkg/rest_api/models/request"
 	"github.com/ammiranda/connectRN/pkg/rest_api/models/response"
-	"time"
 )
 
 const (
@@ -62,7 +63,7 @@ func determineDOBDayOfWeek(t string) (string, error) {
 		return "", err
 	}
 
-	return fmt.Sprintf("%s", timeObj.Weekday()), nil
+	return fmt.Sprint(timeObj.Weekday()), nil
 }
 
 func parseCreatedOn(t int64) (string, error) {

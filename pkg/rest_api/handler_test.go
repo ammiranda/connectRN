@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"path"
 	"testing"
 
 	"github.com/ammiranda/connectRN/pkg/image_service"
@@ -63,12 +64,13 @@ func TestImageRoute_Success(t *testing.T) {
 
 	defer outputFile.Close()
 
-	jpeg.Encode(outputFile, img, nil)
+	err = jpeg.Encode(outputFile, img, nil)
+	require.NoError(t, err)
 
 	var requestBody bytes.Buffer
 	multiPartWriter := multipart.NewWriter(&requestBody)
 
-	fileWriter, err := multiPartWriter.CreateFormFile("image", "test.jpg")
+	fileWriter, err := multiPartWriter.CreateFormFile("image", path.Base(outputFile.Name()))
 	require.NoError(t, err)
 
 	multiPartWriter.Close()

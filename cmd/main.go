@@ -12,5 +12,8 @@ func main() {
 
 	router := rest_api.NewRouter(u, i)
 
-	router.Run()
+	err := router.Run()
+	if err != nil {
+		panic(1)
+	}
 }
